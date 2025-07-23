@@ -16,10 +16,9 @@ public class AccountingService {
     private final CsvFileReader csvFileReader;
     private final ClassifyFileDataService classifyFileDataService;
 
-    public void readExcelFile(final MultipartFile file) {
+    public void saveAccountingDataFile(final MultipartFile file) {
         final List<List<String>> csvFileData = csvFileReader.readCsvFile(file);
 
         classifyFileDataService.classifyFileData(csvFileData);
-
     }
 }

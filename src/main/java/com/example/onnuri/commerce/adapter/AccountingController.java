@@ -21,6 +21,6 @@ public class AccountingController {
             log.error("File is empty");
             throw new NotFoundFileException("File is empty");
         }
-        accountingService.readExcelFile(file);
+        accountingService.saveAccountingDataFile(file);
     }
 }
