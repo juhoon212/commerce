@@ -1,22 +1,37 @@
 package com.example.onnuri.commerce.application.service;
 
-import com.example.onnuri.commerce.domain.FileData;
+import com.example.onnuri.commerce.domain.Account;
+import com.example.onnuri.commerce.domain.BaseFile;
+import com.example.onnuri.commerce.domain.Policy;
+import com.example.onnuri.commerce.exception.IllegalFileTypeException;
+import com.example.onnuri.commerce.helper.FileReader;
+import com.example.onnuri.commerce.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ClassifyFileDataService {
+    private final FileReader fileReader;
+    private final FileDataStore fileDataStore;
 
-    public FileData classifyFileData(final List<List<String>> fileData) {
-        for (List<String> data : fileData) {
-            log.info("data = {}", data);
+    public BaseFile classifyFileData(final MultipartFile file) {
+        // 이미 validate된 파일
+        final String originalFilename = file.getOriginalFilename();
+
+        if (originalFilename.endsWith(StringUtil.CSV_FILE_PREFIX)) {
+            final Account account = fileReader.readCsvFile(file);
+            log.info("account = {}", account);
+
+            return account;
+        } else if (originalFilename.endsWith(StringUtil.JSON_FILE_PREFIX)) {
+            final Policy policy = fileReader.readJsonFile(file);
+            log.info("rule = {}", policy);
+            return policy;
         }
-
-        return FileData.generateFileData(fileData.get(0), fileData.subList(1, fileData.size()));
+        throw new IllegalFileTypeException("지원하지 않는 파일 형식입니다. 파일 이름: " + originalFilename);
     }
 }

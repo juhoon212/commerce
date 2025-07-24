@@ -22,4 +22,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.internalServerError()
                 .body(e.getMessage());
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleIllegalFileTypeException(IllegalFileTypeException e) {
+        log.error("IllegalFileTypeException occurred: {}", e.getMessage(), e);
+        return ResponseEntity.internalServerError()
+                .body(e.getMessage());
+    }
 }
