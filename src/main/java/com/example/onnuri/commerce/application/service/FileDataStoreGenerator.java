@@ -41,7 +41,8 @@ public class FileDataStoreGenerator {
                     String currentDescription = bankTransactionRecord.getDescription();
 
                     for (IntegratedPolicy policy : integratedPolicies) {
-                        if (currentDescription.contains(policy.getCategoryName())) {
+                        // 적요 가 정책의 키워드에 포함되어 있는지 확인
+                        if (currentDescription.contains(policy.getKeyword())) {
                             // DB에 저장할 목록 cache 해야함
                             log.info("장부 적요 '{}'가 정책 '{}'에 포함되어 있습니다.", currentDescription, policy.getCategoryName());
                         }
