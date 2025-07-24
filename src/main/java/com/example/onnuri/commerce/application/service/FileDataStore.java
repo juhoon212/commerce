@@ -37,7 +37,6 @@ public class FileDataStore {
 
     public void clearMap(String key) {
         fileDataMap.remove(key);
-        clearQueue(key);
     }
 
     public void clearAllMapValues() {
