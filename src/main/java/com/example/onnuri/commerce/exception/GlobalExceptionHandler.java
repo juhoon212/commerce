@@ -29,4 +29,27 @@ public class GlobalExceptionHandler {
         return ResponseEntity.internalServerError()
                 .body(e.getMessage());
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("handleIllegalArgumentException occurred: {}", e.getMessage(), e);
+        return ResponseEntity.internalServerError()
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleRuntimeException(RuntimeException e) {
+        log.error("RuntimeException occurred: {}", e.getMessage(), e);
+        return ResponseEntity.internalServerError()
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleException(Exception e) {
+        log.error("Exception occurred: {}", e.getMessage(), e);
+        return ResponseEntity.internalServerError()
+                .body(e.getMessage());
+    }
+
+
 }

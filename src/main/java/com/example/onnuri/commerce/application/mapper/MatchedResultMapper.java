@@ -19,7 +19,7 @@ public class MatchedResultMapper {
     }
 
     public CategoryEntity mapToCategoryEntity(final IntegratedPolicy policy) {
-        return new CategoryEntity(policy.getCompanyId(), policy.getCategoryId(), policy.getCategoryName());
+        return new CategoryEntity(policy.getCategoryId(), policy.getCompanyId(), policy.getCategoryName());
     }
 
     public KeywordEntity mapToKeywordEntity(final IntegratedPolicy policy) {

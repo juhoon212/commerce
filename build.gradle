@@ -35,6 +35,10 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.apache.poi:poi-ooxml:5.2.5'
+
+    // querydsl
+    implementation 'io.github.openfeign.querydsl:querydsl-jpa:6.10.1'
+    annotationProcessor 'io.github.openfeign.querydsl:querydsl-apt:6.10.1:jpa'
 }
 
 tasks.named('test') {

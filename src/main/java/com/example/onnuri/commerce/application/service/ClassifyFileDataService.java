@@ -25,8 +25,8 @@ public class ClassifyFileDataService {
         if (originalFilename.endsWith(StringUtil.CSV_FILE_PREFIX)) {
             final Account account = fileReader.readCsvFile(file);
             log.info("account = {}", account);
-
             return account;
+
         } else if (originalFilename.endsWith(StringUtil.JSON_FILE_PREFIX)) {
             final Policy policy = fileReader.readJsonFile(file);
             log.info("policy = {}", policy);

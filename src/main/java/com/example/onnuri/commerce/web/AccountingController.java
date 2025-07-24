@@ -1,16 +1,16 @@
-package com.example.onnuri.commerce.adapter.in;
+package com.example.onnuri.commerce.web;
 
-import com.example.onnuri.commerce.application.service.AutoFileDataGenerateService;
-import com.example.onnuri.commerce.application.service.CacheAccountingPolicySetService;
-import com.example.onnuri.commerce.application.service.ClassifyFileDataService;
-import com.example.onnuri.commerce.application.service.ClassifyPolicyService;
+import com.example.onnuri.commerce.application.service.*;
 import com.example.onnuri.commerce.domain.account.Account;
 import com.example.onnuri.commerce.domain.BaseFile;
 import com.example.onnuri.commerce.domain.policy.IntegratedPolicy;
 import com.example.onnuri.commerce.domain.policy.Policy;
 import com.example.onnuri.commerce.exception.NotFoundFileException;
+import com.example.onnuri.commerce.web.vo.GetClassifiedResultResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,14 +27,20 @@ public class AccountingController {
     private final AutoFileDataGenerateService autoFileDataGenerateService;
     private final ClassifyPolicyService classifyPolicyService;
     private final CacheAccountingPolicySetService cacheAccountingPolicySetService;
+    private final GetClassifiedResultService getClassifiedResultService;
 
     private final FileValidator fileValidator;
 
     @PostMapping("/process")
-    public void processAutoAccounting(@RequestPart final List<MultipartFile> files) {
+    public ResponseEntity<?> processAutoAccounting(@RequestPart final List<MultipartFile> files) {
         if (files.isEmpty()) {
             log.error("File is empty");
-            throw new NotFoundFileException("File is empty");
+            throw new NotFoundFileException("파일이 비어있습니다.");
+        }
+
+        if (files.size() != 2) {
+            log.error("파일은 csv && json 파일 두개이상을 보내주세요");
+            throw new IllegalArgumentException("파일 갯수는 2개 보내주세요 (csv, json 파일)");
         }
 
         List<Account> accounts = new ArrayList<>();
@@ -55,11 +61,22 @@ public class AccountingController {
                 integratedPolicies = classifyPolicyService.classifyPolicy(policy);
             }
         }
-
-        cacheAccountingPolicySetService.cacheAccountingPolicySet(key, accounts, integratedPolicies);
-
         log.info("Processing auto accounting accounts: {}, integratedPolicies = {}", accounts, integratedPolicies);
 
+        // 자바 메모리에 임시 저장
+        cacheAccountingPolicySetService.cacheAccountingPolicySet(key, accounts, integratedPolicies);
+
+        // 저장된 파일데이터 매칭 및 저장
         autoFileDataGenerateService.generateFileData(key);
+
+        return ResponseEntity.ok("성공적으로 저장되었습니다.");
+    }
+
+    @GetMapping("/records")
+    public ResponseEntity<List<GetClassifiedResultResponse>> getClassifiedResult(
+            @RequestParam(required = false) final String companyId
+    ) {
+        // companyId가 없으면 전체조회
+        return ResponseEntity.ok(getClassifiedResultService.getClassifiedResults(companyId));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.onnuri.commerce.adapter.in;
+package com.example.onnuri.commerce.web;
 
 import com.example.onnuri.commerce.exception.NotFoundFileException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import static com.example.onnuri.commerce.util.StringUtil.*;
 public class FileValidator {
     public void validateFile(final MultipartFile file) {
         if (file.isEmpty()) {
-            throw new NotFoundFileException("해당 파일이 비어있습니다. 파일 이름 = " + file.getOriginalFilename());
+            throw new NotFoundFileException("해당 파일이 비어있습니다.");
         }
 
         final String originalFilename = file.getOriginalFilename();
