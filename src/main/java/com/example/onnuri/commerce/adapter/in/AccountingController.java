@@ -55,6 +55,7 @@ public class AccountingController {
                 integratedPolicies = classifyPolicyService.classifyPolicy(policy);
             }
         }
+
         cacheAccountingPolicySetService.cacheAccountingPolicySet(key, accounts, integratedPolicies);
 
         log.info("Processing auto accounting accounts: {}, integratedPolicies = {}", accounts, integratedPolicies);

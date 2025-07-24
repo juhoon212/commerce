@@ -2,18 +2,21 @@ package com.example.onnuri.commerce.application.service;
 
 import com.example.onnuri.commerce.domain.AccountingPolicySet;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+@Slf4j
 @Component
 public class FileDataStore {
     // 데이터 처리를 위한 buffer 역할을 하는 ConcurrentHashMap
     private final Map<String, ConcurrentLinkedQueue<AccountingPolicySet>> fileDataMap = new ConcurrentHashMap<>();
 
     public void addFileData(final String key, final AccountingPolicySet accountingPolicySet) {
+        log.info("key = {}", key);
         fileDataMap.putIfAbsent(key, new ConcurrentLinkedQueue<>());
         fileDataMap.get(key).add(accountingPolicySet);
     }

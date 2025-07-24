@@ -1,7 +1,10 @@
 package com.example.onnuri.commerce.application.service;
 
+import com.example.onnuri.commerce.application.dto.ClassifyDataFileResultWrapper;
+import com.example.onnuri.commerce.domain.MatchedAccountingPolicySet;
 import com.example.onnuri.commerce.domain.account.Account;
 import com.example.onnuri.commerce.domain.AccountingPolicySet;
+import com.example.onnuri.commerce.domain.account.BankTransactionRecord;
 import com.example.onnuri.commerce.domain.policy.IntegratedPolicy;
 import com.example.onnuri.commerce.domain.policy.Policy;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +19,17 @@ import java.util.List;
 public class AutoFileDataGenerateService {
 
     private final FileDataStoreGenerator fileDataStoreGenerator;
+    private final SaveClassifiedDataService saveClassifiedDataService;
 
     public void generateFileData(final String key) {
-        // 장부 적요 필드에 있는 키워드들이 정책에 있는 keyword에 포함되어 있으면
+        // 이 제네레이터에서 매칭하고
+        final ClassifyDataFileResultWrapper results = fileDataStoreGenerator.generateFileDataStore(key);
 
-        fileDataStoreGenerator.generateFileDataStore(key);
+        final List<MatchedAccountingPolicySet> matchedResults = results.matchedAccountingPolicySets();
+        final List<BankTransactionRecord> notMatchedResults = results.unmatchedBankTransactionRecords();
 
-        // 해당 키워드가 등록되어있는 회사로 분류
+        // 해당 list를 돌면서 매칭 된 내용 DB에 저장
+        saveClassifiedDataService.saveClassifiedDataResults(matchedResults, notMatchedResults);
 
     }
 }
