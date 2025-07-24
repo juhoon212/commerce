@@ -1,8 +1,9 @@
 package com.example.onnuri.commerce.application.service;
 
-import com.example.onnuri.commerce.domain.Account;
+import com.example.onnuri.commerce.domain.account.Account;
 import com.example.onnuri.commerce.domain.AccountingPolicySet;
-import com.example.onnuri.commerce.domain.Policy;
+import com.example.onnuri.commerce.domain.policy.IntegratedPolicy;
+import com.example.onnuri.commerce.domain.policy.Policy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,21 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AutoFileDataGenerateService {
 
-    private final FileDataStore fileDataStore;
+    private final FileDataStoreGenerator fileDataStoreGenerator;
 
-    public void generateFileData(final List<Account> accounts, final Policy policy, final String key) {
+    public void generateFileData(final String key) {
+        // 장부 적요 필드에 있는 키워드들이 정책에 있는 keyword에 포함되어 있으면
 
-        // 회계 장부 데이터와 policy를 이용하여 AccountingPolicySet 생성
-        final AccountingPolicySet accountingPolicySet = AccountingPolicySet.generateAccountingPolicySet(accounts, policy);
+        fileDataStoreGenerator.generateFileDataStore(key);
 
-        if (fileDataStore.isRegisteredKey(key)) {
-            throw new RuntimeException("처리중인 파일입니다. 파일 이름을 확인해주세요");
-        }
-
-        // 생성된 AccountingPolicySet을 FileDataStore에 저장
-        fileDataStore.addFileData(key, accountingPolicySet);
-
-
+        // 해당 키워드가 등록되어있는 회사로 분류
 
     }
 }

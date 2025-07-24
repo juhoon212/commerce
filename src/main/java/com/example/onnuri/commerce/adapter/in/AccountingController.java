@@ -1,10 +1,13 @@
 package com.example.onnuri.commerce.adapter.in;
 
 import com.example.onnuri.commerce.application.service.AutoFileDataGenerateService;
+import com.example.onnuri.commerce.application.service.CacheAccountingPolicySetService;
 import com.example.onnuri.commerce.application.service.ClassifyFileDataService;
-import com.example.onnuri.commerce.domain.Account;
+import com.example.onnuri.commerce.application.service.ClassifyPolicyService;
+import com.example.onnuri.commerce.domain.account.Account;
 import com.example.onnuri.commerce.domain.BaseFile;
-import com.example.onnuri.commerce.domain.Policy;
+import com.example.onnuri.commerce.domain.policy.IntegratedPolicy;
+import com.example.onnuri.commerce.domain.policy.Policy;
 import com.example.onnuri.commerce.exception.NotFoundFileException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,8 @@ public class AccountingController {
 
     private final ClassifyFileDataService classifyFileDataService;
     private final AutoFileDataGenerateService autoFileDataGenerateService;
+    private final ClassifyPolicyService classifyPolicyService;
+    private final CacheAccountingPolicySetService cacheAccountingPolicySetService;
 
     private final FileValidator fileValidator;
 
@@ -33,7 +38,7 @@ public class AccountingController {
         }
 
         List<Account> accounts = new ArrayList<>();
-        Policy classifiedPolicy = null;
+        List<IntegratedPolicy> integratedPolicies = null;
         String key = null;
 
         for (MultipartFile file : files) {
@@ -45,12 +50,15 @@ public class AccountingController {
                 accounts.add(account);
                 key = file.getOriginalFilename();
             } else if (baseFile instanceof Policy policy) {
-                classifiedPolicy = policy;
+                // 정책 분류 서비스 호출
+                // List로 계속 묶여 있어서 푸는 역할
+                integratedPolicies = classifyPolicyService.classifyPolicy(policy);
             }
         }
+        cacheAccountingPolicySetService.cacheAccountingPolicySet(key, accounts, integratedPolicies);
 
-        log.info("Processing auto accounting accounts: {}, rule = {}", accounts, classifiedPolicy);
+        log.info("Processing auto accounting accounts: {}, integratedPolicies = {}", accounts, integratedPolicies);
 
-        autoFileDataGenerateService.generateFileData(accounts, classifiedPolicy, key);
+        autoFileDataGenerateService.generateFileData(key);
     }
 }

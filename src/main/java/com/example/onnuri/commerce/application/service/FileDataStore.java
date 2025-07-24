@@ -1,7 +1,7 @@
 package com.example.onnuri.commerce.application.service;
 
-import com.example.onnuri.commerce.domain.Account;
 import com.example.onnuri.commerce.domain.AccountingPolicySet;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -18,10 +18,18 @@ public class FileDataStore {
         fileDataMap.get(key).add(accountingPolicySet);
     }
 
+    public ConcurrentLinkedQueue<AccountingPolicySet> getQueue(final String key) {
+        return fileDataMap.get(key);
+    }
 
     private void clearQueue(String key) {
         final ConcurrentLinkedQueue<AccountingPolicySet> accounts = fileDataMap.get(key);
         accounts.clear();
+    }
+
+    public AccountingPolicySet getAccountingPolicySetValue(final String key) {
+        final ConcurrentLinkedQueue<AccountingPolicySet> queue = fileDataMap.get(key);
+        return queue.poll();
     }
 
     public void clearMap(String key) {

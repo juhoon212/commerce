@@ -1,4 +1,4 @@
-package com.example.onnuri.commerce.domain;
+package com.example.onnuri.commerce.domain.account;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

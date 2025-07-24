@@ -1,3 +1,5 @@
+
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=commerce&utf8Encoding=true
@@ -20,4 +22,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-
+server:
+  port: 8083

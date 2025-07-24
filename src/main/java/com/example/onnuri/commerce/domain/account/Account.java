@@ -1,6 +1,7 @@
-package com.example.onnuri.commerce.domain;
+package com.example.onnuri.commerce.domain.account;
 
 import com.example.onnuri.commerce.common.enums.FileType;
+import com.example.onnuri.commerce.domain.BaseFile;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.example.onnuri.commerce.application.service;
 
-import com.example.onnuri.commerce.domain.Policy;
+import com.example.onnuri.commerce.domain.policy.Policy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

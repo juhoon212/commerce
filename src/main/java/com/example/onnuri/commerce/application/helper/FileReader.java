@@ -1,8 +1,10 @@
-package com.example.onnuri.commerce.helper;
+package com.example.onnuri.commerce.application.helper;
 
-import com.example.onnuri.commerce.domain.Account;
-import com.example.onnuri.commerce.domain.CompanyList;
-import com.example.onnuri.commerce.domain.Policy;
+import com.example.onnuri.commerce.application.mapper.PolicyJsonMapper;
+import com.example.onnuri.commerce.domain.account.Account;
+import com.example.onnuri.commerce.application.dto.CompanyListPolicyDto;
+import com.example.onnuri.commerce.domain.policy.CompanyListPolicy;
+import com.example.onnuri.commerce.domain.policy.Policy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import java.util.List;
 public class FileReader {
 
     private final ObjectMapper objectMapper;
+    private final PolicyJsonMapper policyJsonMapper;
 
     public Account readCsvFile(final MultipartFile file) {
         List<String> headers = new ArrayList<>();
@@ -57,11 +60,15 @@ public class FileReader {
 
         try {
             objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SnakeCaseStrategy.INSTANCE);
-            final CompanyList companyList = objectMapper.readValue(file.getBytes(), CompanyList.class);
-            log.info("companyList = {}", companyList);
+            final CompanyListPolicyDto companyListPolicyDto = objectMapper.readValue(file.getBytes(), CompanyListPolicyDto.class);
+            log.info("companyList = {}", companyListPolicyDto);
+
+            // dto에서 도메인 추출
+            final CompanyListPolicy companyListPolicy = policyJsonMapper.mapToCompanyListPolicy(companyListPolicyDto);
+
+            return Policy.generatePolicy(companyListPolicy);
         } catch (IOException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        return null;
     }
 }

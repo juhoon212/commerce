@@ -1,5 +1,7 @@
 package com.example.onnuri.commerce.domain;
 
+import com.example.onnuri.commerce.domain.account.Account;
+import com.example.onnuri.commerce.domain.policy.IntegratedPolicy;
 import lombok.Getter;
 
 import java.util.List;
@@ -8,17 +10,17 @@ import java.util.List;
 public class AccountingPolicySet {
 
     private final List<Account> accounts;
-    private final Policy policy;
+    private final List<IntegratedPolicy> integratedPolicies;
 
-    private AccountingPolicySet(List<Account> accounts, Policy policy) {
+    private AccountingPolicySet(List<Account> accounts, List<IntegratedPolicy> integratedPolicies) {
         this.accounts = accounts;
-        this.policy = policy;
+        this.integratedPolicies = integratedPolicies;
     }
 
     public static AccountingPolicySet generateAccountingPolicySet(
             final List<Account> accounts,
-            final Policy policy
+            final List<IntegratedPolicy> integratedPolicies
     ) {
-        return new AccountingPolicySet(accounts, policy);
+        return new AccountingPolicySet(accounts, integratedPolicies);
     }
 }

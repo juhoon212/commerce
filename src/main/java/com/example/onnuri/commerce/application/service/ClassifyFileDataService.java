@@ -1,10 +1,10 @@
 package com.example.onnuri.commerce.application.service;
 
-import com.example.onnuri.commerce.domain.Account;
+import com.example.onnuri.commerce.domain.account.Account;
 import com.example.onnuri.commerce.domain.BaseFile;
-import com.example.onnuri.commerce.domain.Policy;
+import com.example.onnuri.commerce.domain.policy.Policy;
 import com.example.onnuri.commerce.exception.IllegalFileTypeException;
-import com.example.onnuri.commerce.helper.FileReader;
+import com.example.onnuri.commerce.application.helper.FileReader;
 import com.example.onnuri.commerce.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class ClassifyFileDataService {
             return account;
         } else if (originalFilename.endsWith(StringUtil.JSON_FILE_PREFIX)) {
             final Policy policy = fileReader.readJsonFile(file);
-            log.info("rule = {}", policy);
+            log.info("policy = {}", policy);
             return policy;
         }
         throw new IllegalFileTypeException("지원하지 않는 파일 형식입니다. 파일 이름: " + originalFilename);
