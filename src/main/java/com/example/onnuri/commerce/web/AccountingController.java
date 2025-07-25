@@ -1,16 +1,15 @@
 package com.example.onnuri.commerce.web;
 
-import com.example.onnuri.commerce.application.service.*;
-import com.example.onnuri.commerce.domain.account.Account;
-import com.example.onnuri.commerce.domain.BaseFile;
-import com.example.onnuri.commerce.domain.policy.IntegratedPolicy;
-import com.example.onnuri.commerce.domain.policy.Policy;
+import com.example.onnuri.commerce.core.service.*;
+import com.example.onnuri.commerce.core.domain.account.Account;
+import com.example.onnuri.commerce.core.domain.BaseFile;
+import com.example.onnuri.commerce.core.domain.policy.IntegratedPolicy;
+import com.example.onnuri.commerce.core.domain.policy.Policy;
 import com.example.onnuri.commerce.exception.NotFoundFileException;
 import com.example.onnuri.commerce.web.vo.GetClassifiedResultResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
