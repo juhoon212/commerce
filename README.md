@@ -16,6 +16,12 @@
 - account는 각각 company, category, keyword와 연관관계를 가지며 비즈니스 로직상에서 장부별로 각 데이터를 이 테이블에 매핑시키고 조회는 account 테이블을 통해서 쉽게 조회할 수 있게 만들었습니다.
 - 개발 과정에서의 제약이 많아 외래키 제약조건은 생략하였습니다.
 
+### 🍎 아키텍쳐
+- 기본적으로 모노리틱 아키텍쳐를 선택하였고 로직은 주로 domain 기반으로 만들었습니다.
+- web - controller
+- core - service, domain
+- infrastructure - persistence - repository, entity
+
 ## B. 핵심 자동 분류 규칙
 ### 📖 /api/v1/accounting/process
 - 장부데이터(csv), rules.json(규칙) 파일을 파라미터로 받아서 먼저 파일의 유효성 검사 및 파일 형식을 FileValidator라는 기반의 클래스에서 수행합니다.
@@ -49,7 +55,7 @@
 - 재발 방지 대책으로는 만약 코드적인 오류라면 테스트 코드 혹은 E2E 테스트를 좀 더 강화하여 재발을 막아야 할 것 같습니다.
 
 ## ✅ 실행 및 테스트 카이드
-- Intellij, docker-compose 미리 설치해야합니다.
+- Intellij, docker-compose 미리 설치해야합니다. Java는 17이상 설치해주세요.
 1. IDE(intellij) 에서 제 github repo https://github.com/juhoon212/commerce.git 를 pull 받아주세요
 2. 프로젝트 내부에 있는 docker-compose.yml 파일을 프로젝트 내부 제일 상위경로에서 ./docker-compose up 명령어로 실행해주세요.
 3. 프로젝트 내부에 있는 init.sql 파일을 통해 DB schema및 table을 생성해주세요.
