@@ -56,7 +56,7 @@
 - 재발 방지 대책으로는 만약 코드적인 오류라면 테스트 코드 혹은 E2E 테스트를 좀 더 강화하여 재발을 막아야 할 것 같습니다.
 
 ## ✅ 실행 및 테스트 카이드
-- Intellij, docker-compose 미리 설치해야합니다. Java는 17이상 설치해주세요.
+- Intellij, docker, docker-compose 미리 설치해야합니다. Java는 17이상 설치해주세요.
 1. IDE(intellij) 에서 제 github repo https://github.com/juhoon212/commerce.git 를 pull 받아주세요
 2. 프로젝트 내부에 있는 docker-compose.yml 파일을 프로젝트 내부 제일 상위경로에서 ./docker-compose up 명령어로 실행해주세요.
 3. 프로젝트 내부에 있는 init.sql 파일을 통해 DB schema및 table을 생성해주세요. 프로젝트 경로에서 terminal을 키고 아래 명령어들을 실행해주세요
