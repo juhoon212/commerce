@@ -17,7 +17,7 @@
 - 개발 과정에서의 제약이 많아 외래키 제약조건은 생략하였습니다.
 
 ### 🍎 아키텍쳐
-- 기본적으로 모노리틱 아키텍쳐를 선택하였고 로직은 주로 domain 기반으로 만들었습니다.
+- 기본적으로 모노리틱 아키텍쳐를 선택하였고 로직은 주로 불변 객체인 domain 객체를 만들어 사용하였습니다.
 - web - controller
 - core - service, domain
 - infrastructure - persistence - repository, entity
