@@ -17,10 +17,11 @@
 - 개발 과정에서의 제약이 많아 외래키 제약조건은 생략하였습니다.
 
 ### 🍎 아키텍쳐
-- 기본적으로 모노리틱 아키텍쳐를 선택하였고 로직은 주로 불변 객체인 domain 객체를 만들어 사용하였습니다.
-- web - controller
-- core - service, domain
-- infrastructure - persistence - repository, entity
+- 기본적으로 모노리틱 아키텍쳐를 선택하였고 핵심 비즈니스 로직은 주로 불변 객체인 domain 객체로 분류하여 사용하였습니다.
+- 또한 단일 책임 원칙을 지키기 위하여 각자의 역할을 가진 class로 분류하여 사용하였습니다.
+  - web - controller
+  - core - service, domain
+  - infrastructure - persistence - repository, entity
 
 ## B. 핵심 자동 분류 규칙
 ### 📖 /api/v1/accounting/process
