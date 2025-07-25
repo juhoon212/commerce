@@ -4,7 +4,7 @@
 
 ### 🍎 기술 스택 : Java, Springboot, docker-compose, postgresql, QueryDSL, JPA
 - 언어는 제 메인 스택은 Java, Springboot 기반으로 사용하였습니다. 가장 빠르게 springboot를 기반으로 프로젝트를 구성할 수 있어 사용하였고 기능 구현에 있어 제일 자신있는 언어 이기에 사용하였습니다.
-또한 Bean들을 통해 SRP 의 단일 책임 원칙을 가장 잘 구현할 수 있는 프레임워크 이기도 하여 선정하였습니다.
+또한 Bean들을 통해 SRP 의 단일 책임 원칙 및 싱글톤을 가장 잘 구현할 수 있는 프레임워크 이기도 하여 선정하였습니다.
 - Spring data JPA 는 기본 CRUD를 구현하는데 굉장히 간편해서 사용하였고 QueryDSL은 join query를 좀 더 쉽고 가독성을 좋게 하기 위하여 사용하였습니다.
 - DB도 마찬가지로 제가 가장 많이 쓰고 있고 가장 익숙한 DB인 postgresql을 사용하였습니다.
 ### 🍎 DB: 프로젝트 내 init.sql 참조 부탁드립니다.
