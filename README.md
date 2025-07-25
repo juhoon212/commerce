@@ -59,8 +59,12 @@
 - Intellij, docker-compose 미리 설치해야합니다. Java는 17이상 설치해주세요.
 1. IDE(intellij) 에서 제 github repo https://github.com/juhoon212/commerce.git 를 pull 받아주세요
 2. 프로젝트 내부에 있는 docker-compose.yml 파일을 프로젝트 내부 제일 상위경로에서 ./docker-compose up 명령어로 실행해주세요.
-3. 프로젝트 내부에 있는 init.sql 파일을 통해 DB schema및 table을 생성해주세요.
-4. 스프링부트 프로젝트를 IDE에서 실행해주세요
+3. 프로젝트 내부에 있는 init.sql 파일을 통해 DB schema및 table을 생성해주세요. 프로젝트 경로에서 terminal을 키고 아래 명령어들을 실행해주세요
+   ```
+   docker cp ./init.sql local_postgres_commerce:/init.sql
+   docker exec -it local_postgres_commerce psql -U commerce -d postgres -f init.sql
+   ```
+5. 스프링부트 프로젝트를 IDE에서 실행해주세요
 4. Postman을 설치하시고 localhost:8085/api/v1/accounting/process로 POST 요청을 보내주세요. 
 아래 사진과 같이 multipart/form-data에 key: files, value에 csv, json파일을 넣어서 요청을 보내주세요.
 
