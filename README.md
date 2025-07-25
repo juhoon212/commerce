@@ -31,6 +31,8 @@
 ### 📖 /api/v1/accounting/records
 - 조회 쪽에서는 기본으로 정리된 account 테이블을 참조하여 쿼리를 작성하였고 이 과정에서 category 테이블의 name 필드가 response 값으로 필요했기 때문에 account 테이블과 category테이블을 join하여 response를 만들었습니다.
 - 또한 쿼리 작성은 QueryDSL을 사용하여 작성하였습니다. QueryDSL은 또 하나의 장점으로 Query의 에러를 컴파일 에러로 표시해주기 때문에 시간 효율을 위해 사용한 점도 있습니다.
+- RequestParam 으로 companyId 를 보낼시에는 그 companyId에 해당하는 데이터만 내보내고 companyId 생략시에는 전체 데이터를 내보냅니다.
+- 응답 필드에 isMatched: true 이면 keyword에 매칭된 항목, false면 매칭되지 않은 데이터 입니다.
 
 ## C. 보안 강화 방안
 ### 🔍접근제어
@@ -56,3 +58,7 @@
 아래 사진과 같이 multipart/form-data에 key: files, value에 csv, json파일을 넣어서 요청을 보내주세요.
 
 ![ex.png](ex.png)
+
+5. /api/v1/accounting/records?companyId=com1 을 postman에서 실행해주세요. companyId를 생략할시 모든 데이터 조회를 조회합니다.
+<img width="1050" height="493" alt="스크린샷 2025-07-25 오후 10 31 46" src="https://github.com/user-attachments/assets/2126d0f9-a6a5-4299-b066-2b0dadcb5d34" />
+
